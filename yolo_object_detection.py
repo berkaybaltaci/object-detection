@@ -30,7 +30,7 @@ for out in outs:
         scores = detection[5:]
         class_id = np.argmax(scores)
         confidence = scores[class_id]
-        if confidence > 0.9:
+        if confidence > 0.:
             # Object detected
             center_x = int(detection[0] * width)
             center_y = int(detection[1] * height)
@@ -52,6 +52,8 @@ for i in range(len(boxes)):
     if i in indexes:
         x, y, w, h = boxes[i]
         label = str(classes[class_ids[i]])
+        if (label != 'car'):
+            continue
         color = colors[class_ids[i]]
         cv2.rectangle(img, (x - 5, y - 15), (x + w, y + h), color, 2)
         cv2.putText(img=img, text=label, org=(x,y,), fontFace=font, fontScale=1, color=color, thickness=2)
