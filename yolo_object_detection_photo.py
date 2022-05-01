@@ -11,8 +11,8 @@ output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
 colors = np.random.uniform(0, 255, size=(len(classes), 3))
 
 # Loading image
-img = cv2.imread("street.jpg")
-# img = cv2.resize(img, None, fx=0.4, fy=0.4)
+img = cv2.imread("sacma.jpg")
+# img = cv2.resize(img, None, fx=0.7, fy=0.7)
 height, width, channels = img.shape
 
 # Detecting objects
@@ -30,7 +30,7 @@ for out in outs:
         scores = detection[5:]
         class_id = np.argmax(scores)
         confidence = scores[class_id]
-        if confidence > 0.:
+        if confidence > 0.01:
             # Object detected
             center_x = int(detection[0] * width)
             center_y = int(detection[1] * height)
@@ -47,16 +47,16 @@ for out in outs:
 
 indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4)
 print(indexes)
-font = cv2.FONT_HERSHEY_COMPLEX_SMALL
+font = cv2.FONT_HERSHEY_PLAIN
 for i in range(len(boxes)):
     if i in indexes:
         x, y, w, h = boxes[i]
         label = str(classes[class_ids[i]])
-        if (label != 'car'):
-            continue
+        # if (label != 'car'):
+        #     continue
         color = colors[class_ids[i]]
-        cv2.rectangle(img, (x - 5, y - 15), (x + w, y + h), color, 2)
-        cv2.putText(img=img, text=label, org=(x,y,), fontFace=font, fontScale=1, color=color, thickness=2)
+        cv2.rectangle(img, (x - 5, y - 25), (x + w, y + h), color, 2)
+        cv2.putText(img=img, text=label, org=(x,y,), fontFace=font, fontScale=2, color=color, thickness=2)
         # cv2.putText(img, label, (x, y), font, 0.5, color, 2)
 
 
