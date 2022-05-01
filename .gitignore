@@ -2,3 +2,4 @@ yolov3.weights
 *.jpg
 .png
 *.weights
+*.mp4

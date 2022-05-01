@@ -12,7 +12,7 @@ output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
 colors = np.random.uniform(0, 255, size=(len(classes), 3))
 
 #####################
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('london_driving.mp4')
 if (cap.isOpened() == False):
     print('FILE NOT FOUND OR WRONG CODEC USED')
 
@@ -23,7 +23,7 @@ while (cap.isOpened()):
         height, width, channels = img.shape
 
         # Detecting objects
-        blob = cv2.dnn.blobFromImage(img, 0.00392, (224, 224), (0, 0, 0), True, crop=False)
+        blob = cv2.dnn.blobFromImage(img, 0.00392, (128, 128), (0, 0, 0), True, crop=False)
 
         net.setInput(blob)
         outs = net.forward(output_layers)
@@ -53,7 +53,7 @@ while (cap.isOpened()):
                     class_ids.append(class_id)
 
         indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.5, 0.4)
-        print(indexes)
+        # print(indexes)
         font = cv2.FONT_HERSHEY_PLAIN
         for i in range(len(boxes)):
             if i in indexes:
@@ -63,10 +63,9 @@ while (cap.isOpened()):
                 #     continue
                 color = colors[class_ids[i]]
                 cv2.rectangle(img, (x - 5, y - 25), (x + w, y + h), color, 2)
-                cv2.putText(img=img, text=label, org=(x,y,), fontFace=font, fontScale=2, color=color, thickness=2)
-                # cv2.putText(img, label, (x, y), font, 0.5, color, 2)
-
-                cv2.imshow('Testing on a sample video', img)
+                cv2.putText(img=img, text=label, org=(x,y), fontFace=font, fontScale=2, color=(0,0,0), thickness=4)
+                cv2.putText(img=img, text=label, org=(x,y), fontFace=font, fontScale=2, color=color, thickness=1)
+                cv2.imshow('Obje algilama', img)
 
                 # hit q to exit
                 if cv2.waitKey(1) & 0xFF == ord('q'):
