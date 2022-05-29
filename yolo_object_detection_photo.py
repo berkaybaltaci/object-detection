@@ -11,8 +11,8 @@ output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
 colors = np.random.uniform(0, 255, size=(len(classes), 3))
 
 # Loading image
-img = cv2.imread("sacma.jpg")
-# img = cv2.resize(img, None, fx=0.7, fy=0.7)
+img = cv2.imread("../fotolar/yolo_example_photo.jpeg")
+# img = cv2.resize(img, None, fx=0.5, fy=0.5)
 height, width, channels = img.shape
 
 # Detecting objects
